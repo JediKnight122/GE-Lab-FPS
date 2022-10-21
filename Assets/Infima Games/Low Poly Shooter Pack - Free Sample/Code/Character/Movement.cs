@@ -1,5 +1,9 @@
 ﻿// Copyright 2021, Infima Games. All Rights Reserved.
 
+
+//Additions by Finn Wiskandt:
+// Crouching, Jumping, Communication Improvements
+
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -29,7 +33,7 @@ namespace InfimaGames.LowPolyShooterPack
         [Tooltip("How fast the player moves while running."), SerializeField]
         private float speedRunning = 9.0f;
 
-        //Addition Finn
+        
         [Tooltip("The duration of the time in which the player is elevated into the air")]
         [SerializeField]
         private float jumpLenght=0.5f;
@@ -47,6 +51,9 @@ namespace InfimaGames.LowPolyShooterPack
         [SerializeField]
         private float crouchFactor=0.2f;
 
+        [Tooltip("How fast the player moves while crouching")]
+        [SerializeField]
+        private float speedCrouching=2.0f;
         #endregion
 
         #region PROPERTIES
@@ -194,9 +201,14 @@ namespace InfimaGames.LowPolyShooterPack
             Vector2 frameInput = playerCharacter.GetInputMovement();
             //Calculate local-space direction by using the player's input.
             var movement = new Vector3(frameInput.x, 0.0f, frameInput.y);
+
+            if (crouching)
+            {
+                movement *= speedCrouching;
+            }
             
             //Running speed calculation.
-            if(playerCharacter.IsRunning())
+            else if(playerCharacter.IsRunning())
                 movement *= speedRunning;
             else
             {

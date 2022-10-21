@@ -778,8 +778,9 @@ namespace InfimaGames.LowPolyShooterPack
 		{
 			
 			//Block while the cursor is unlocked.
-			if (!cursorLocked)
-				return;
+			if (!cursorLocked)return;
+			
+			if (crouching) return; //Cant run while crouching
 			
 			//Switch.
 			switch (context.phase)
