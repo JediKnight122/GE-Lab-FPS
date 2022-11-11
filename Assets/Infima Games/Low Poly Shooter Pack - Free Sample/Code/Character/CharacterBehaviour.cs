@@ -114,6 +114,11 @@ namespace InfimaGames.LowPolyShooterPack
         /// </summary>
         public abstract void AnimationEndedHolster();
 
+        
+        public virtual event Action OnCrouchStart;
+        public virtual event Action OnCrouchEnd;
+        public virtual event Action OnJump;
+        
         #endregion
     }
 }

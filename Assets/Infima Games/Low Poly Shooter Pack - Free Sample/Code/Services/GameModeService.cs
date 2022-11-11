@@ -1,5 +1,7 @@
 ﻿// Copyright 2021, Infima Games. All Rights Reserved.
 
+using Character;
+
 namespace InfimaGames.LowPolyShooterPack
 {
     /// <summary>
@@ -12,20 +14,20 @@ namespace InfimaGames.LowPolyShooterPack
         /// <summary>
         /// The Player Character.
         /// </summary>
-        private Character playerCharacter;
+        private CharacterPlayer playerCharacterPlayer;
         
         #endregion
         
         #region FUNCTIONS
         
-        public Character GetPlayerCharacter()
+        public CharacterPlayer GetPlayerCharacter()
         {
             //Make sure we have a player character that is good to go!
-            if (playerCharacter == null)
-                playerCharacter = UnityEngine.Object.FindObjectOfType<Character>();
+            if (playerCharacterPlayer == null)
+                playerCharacterPlayer = UnityEngine.Object.FindObjectOfType<CharacterPlayer>();
             
             //Return.
-            return playerCharacter;
+            return playerCharacterPlayer;
         }
         
         #endregion

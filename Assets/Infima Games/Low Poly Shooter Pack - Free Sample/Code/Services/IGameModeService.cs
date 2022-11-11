@@ -1,5 +1,7 @@
 ﻿// Copyright 2021, Infima Games. All Rights Reserved.
 
+using Character;
+
 namespace InfimaGames.LowPolyShooterPack
 {
     /// <summary>
@@ -10,6 +12,6 @@ namespace InfimaGames.LowPolyShooterPack
         /// <summary>
         /// Returns the Player Character.
         /// </summary>
-        Character GetPlayerCharacter();
+        CharacterPlayer GetPlayerCharacter();
     }
 }

@@ -93,7 +93,11 @@ namespace InfimaGames.LowPolyShooterPack
         /// <summary>
         /// Player Character.
         /// </summary>
-        private Character playerCharacter;
+        ///
+        ///
+        /// 
+       [SerializeField]
+        private CharacterBehaviour playerCharacter;
         
         /// <summary>
         /// The player character's equipped weapon.
@@ -120,7 +124,8 @@ namespace InfimaGames.LowPolyShooterPack
         protected override void Awake()
         {
             //Get Player Character.
-            playerCharacter = ServiceLocator.Current.Get<IGameModeService>().GetPlayerCharacter();
+            //playerCharacter = ServiceLocator.Current.Get<IGameModeService>().GetPlayerCharacter();
+           
         }
 
         /// Initializes the FpsController on start.
@@ -139,7 +144,7 @@ namespace InfimaGames.LowPolyShooterPack
 
             playerCharacter.OnCrouchStart += StartCrouch;
             playerCharacter.OnCrouchEnd += EndCrouch;
-            playerCharacter.OnJump += Jump;
+            playerCharacter.OnJump += StartJump;
         }
 
         /// Checks if the character is on the ground.
@@ -199,6 +204,7 @@ namespace InfimaGames.LowPolyShooterPack
 
             //Get Movement Input!
             Vector2 frameInput = playerCharacter.GetInputMovement();
+            
             //Calculate local-space direction by using the player's input.
             var movement = new Vector3(frameInput.x, 0.0f, frameInput.y);
 
@@ -260,7 +266,8 @@ namespace InfimaGames.LowPolyShooterPack
             crouching = false;
             capsule.height += crouchFactor;
         }
-        public void Jump()
+
+        private void StartJump()
         {
             if (!grounded)
             {
