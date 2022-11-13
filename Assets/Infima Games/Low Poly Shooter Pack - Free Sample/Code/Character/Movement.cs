@@ -25,7 +25,7 @@ namespace InfimaGames.LowPolyShooterPack
         [SerializeField]
         private AudioClip audioClipRunning;
 
-        [Header("Speeds")]
+        [Header("Movement-Basics")]
 
         [SerializeField]
         private float speedWalking = 5.0f;
@@ -33,10 +33,11 @@ namespace InfimaGames.LowPolyShooterPack
         [Tooltip("How fast the player moves while running."), SerializeField]
         private float speedRunning = 9.0f;
 
-        
+        [Header("Jumping")]
         [Tooltip("The duration of the time in which the player is elevated into the air")]
         [SerializeField]
         private float jumpLenght=0.5f;
+        
         
         [Tooltip("The amount of force which is applied to the player while he jumps up")]
         [SerializeField]
@@ -47,6 +48,7 @@ namespace InfimaGames.LowPolyShooterPack
         private float jumpForceDown=500;
         
         
+        [Header("Crouching")]
         [Tooltip("The factor subtracted by the capsule size.")]
         [SerializeField]
         private float crouchFactor=0.2f;

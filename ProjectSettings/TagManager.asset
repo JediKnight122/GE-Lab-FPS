@@ -10,7 +10,7 @@ TagManager:
   - Dirt
   - Concrete
   - ExplosiveBarrel
-  - Target
+  - Enemy
   - GasTank
   - Metal (Static)
   - Wood (Static)

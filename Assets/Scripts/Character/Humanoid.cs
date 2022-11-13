@@ -9,7 +9,7 @@ public abstract class Humanoid : MonoBehaviour
 
   protected void OnEnable()
   {
-    Debug.Log("Subscribing to Death Event");
+    Debug.Log("Subscribing to Death Event("+gameObject.name+")");
     GetComponent<Health>().OnHealthDepleted += Die;
   }
 
