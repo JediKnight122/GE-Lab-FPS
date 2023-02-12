@@ -5,9 +5,14 @@ namespace Character
 {
     public class CharacterEnemy : CharacterBehaviour
     {
-        public override Camera GetCameraWorld()
+        
+        [Tooltip("Enemy Version of the normal Camera")]
+        [SerializeField]
+        private Transform enemyViewpoint;
+        
+        public override Transform GetCameraWorld()
         {
-            throw new System.NotImplementedException();
+            return transform;
         }
 
         public override InventoryBehaviour GetInventory()
@@ -54,12 +59,6 @@ namespace Character
         {
             throw new System.NotImplementedException();
         }
-
-        public override void EjectCasing()
-        {
-            throw new System.NotImplementedException();
-        }
-
         public override void FillAmmunition(int amount)
         {
             throw new System.NotImplementedException();

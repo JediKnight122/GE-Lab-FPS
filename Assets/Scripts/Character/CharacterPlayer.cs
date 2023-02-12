@@ -1,5 +1,5 @@
 ﻿// Copyright 2021, Infima Games. All Rights Reserved.
-
+//Additions by Finn Wiskandt: Actions, Movement Updates,..
 using System;
 using UnityEngine;
 using System.Collections;
@@ -46,6 +46,7 @@ namespace Character
 		[SerializeField]
 		private Animator characterAnimator;
 
+		public Transform enemyTargetPoint;
 		public override event Action OnCrouchStart;
 		public override event Action OnCrouchEnd;
 		public override event Action OnJump;
@@ -168,6 +169,8 @@ namespace Character
 		/// </summary>
 		private bool cursorLocked;
 
+		private float defaultFOV;
+		
 		#endregion
 
 		#region CONSTANTS
@@ -214,6 +217,9 @@ namespace Character
 			layerActions = characterAnimator.GetLayerIndex("Layer Actions");
 			//Cache a reference to the overlay layer's index.
 			layerOverlay = characterAnimator.GetLayerIndex("Layer Overlay");
+
+			//defaultFOV = cameraWorld.fieldOfView;
+			defaultFOV = 81.82877f;
 		}
 
 		protected override void Update()
@@ -224,7 +230,15 @@ namespace Character
 			running = holdingButtonRun && CanRun();
 
 			crouching = holdingButtonCrouch && CanCrouch();
-			
+
+			if (aiming)
+			{
+				//cameraWorld.fieldOfView = 21;
+			}
+			else
+			{
+				//cameraWorld.fieldOfView = defaultFOV;
+			}
 			//Holding the firing button.
 			if (holdingButtonFire)
 			{
@@ -263,7 +277,7 @@ namespace Character
 
 		#region GETTERS
 
-		public override Camera GetCameraWorld() => cameraWorld;
+		public override Transform GetCameraWorld() => cameraWorld.transform;
 
 		public override InventoryBehaviour GetInventory() => inventory;
 		
@@ -760,7 +774,6 @@ namespace Character
 		/// </summary>
 		public void OnTryJump(InputAction.CallbackContext context)
 		{
-			Debug.Log("JUMP TEST");
 			//Block while the cursor is unlocked.
 			if (!cursorLocked)
 				return;
@@ -842,13 +855,31 @@ namespace Character
 				//Performed.
 				case {phase: InputActionPhase.Performed}:
 					//Toggle the cursor locked value.
-					cursorLocked = !cursorLocked;
-					//Update the cursor's state.
-					UpdateCursorState();
+					
+					SwitchCursorLocked();
+					
 					break;
 			}
 		}
-		
+
+		public void SwitchCursorLocked()
+		{
+			cursorLocked = !cursorLocked;
+			
+			if (!cursorLocked)
+			{
+				GetComponent<PlayerInput>().SwitchCurrentActionMap("UI");
+				UIManager.instance.ShowMenu(true);
+			}
+			else
+			{
+				GetComponent<PlayerInput>().SwitchCurrentActionMap("Player");
+				UIManager.instance.ShowMenu(false);
+			}
+			
+			//Update the cursor's state.
+			UpdateCursorState();
+		}
 		/// <summary>
 		/// Movement.
 		/// </summary>
@@ -886,13 +917,7 @@ namespace Character
 		#endregion
 
 		#region ANIMATION EVENTS
-
-		public override void EjectCasing()
-		{
-			//Notify the weapon.
-			if(equippedWeapon != null)
-				equippedWeapon.EjectCasing();
-		}
+		
 		public override void FillAmmunition(int amount)
 		{
 			//Notify the weapon to fill the ammunition by the amount.
@@ -921,6 +946,12 @@ namespace Character
 		{
 			//Stop Holstering.
 			holstering = false;
+		}
+
+		private void OnDisable()
+		{
+			cursorLocked = false;
+			UpdateCursorState();
 		}
 
 		#endregion
